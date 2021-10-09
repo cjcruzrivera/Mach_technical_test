@@ -5,19 +5,20 @@ export async function getData(height) {
     const response = await fetch("https://mach-eight.uc.r.appspot.com/");
     const data = await response.json();
 
-    let exists = false;
+    let hashMap = {};
     let results = [];
-
     data.values.map((player) => {
-      if (parseInt(player.h_in) >= height) {
-        const fullname = player.first_name + " " + player.last_name;
-        results.push(fullname);
-        console.log(fullname);
-        exists = true;
+      const fullname = player.first_name + " " + player.last_name;
+
+      if (hashMap[player.h_in]) {
+        results.push([hashMap[player.h_in], fullname]);
+        console.log(`- ${hashMap[player.h_in]} \t ${fullname}`);
       }
+      
+      hashMap[height - player.h_in] = fullname;
     });
 
-    if (!exists) {
+    if (results.length == 0) {
       console.log("No matches found");
     }
 
