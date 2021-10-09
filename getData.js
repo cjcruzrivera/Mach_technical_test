@@ -11,11 +11,17 @@ export async function getData(height) {
       const fullname = player.first_name + " " + player.last_name;
 
       if (hashMap[player.h_in]) {
-        results.push([hashMap[player.h_in], fullname]);
-        console.log(`- ${hashMap[player.h_in]} \t ${fullname}`);
+        hashMap[player.h_in].forEach(element => {
+          results.push([element, fullname]);
+          console.log(`- ${element} \t ${fullname}`);
+        });
       }
-      
-      hashMap[height - player.h_in] = fullname;
+
+      if(!hashMap[height - player.h_in]){
+        hashMap[height - player.h_in] = []
+      }
+
+      hashMap[height - player.h_in].push(fullname);
     });
 
     if (results.length == 0) {
@@ -25,6 +31,7 @@ export async function getData(height) {
     return results;
   } catch (error) {
     console.log("Api error");
+    console.log(error);
     return "Error";
   }
 }
