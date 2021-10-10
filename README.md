@@ -47,5 +47,30 @@ $ node main.js n
 * n should be a valid integer
 
 
+## Testing
+
+* Due to an incompatibility between the test library and node-fetch, the getData method is reimplemented for testing, fetching data from the json file testData.json
+
+### Create new tests
+
+On file getDataForTesting.test.js include the next code changing the heightForTesting and the expectedResult
+
+```shell
+test('Test name here', async () => {
+    const heightForTesting = 0
+    const data = await getData(heightForTesting)
+
+    const expectedResult = []
+    expect(data).toStrictEqual(expectedResult);
+
+})
+```
+
+
+### Run existing tests
+
+```shell
+$ npm run test
+```
 
 
